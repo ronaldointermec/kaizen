@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "933394847272",
+    "project_id": "kaizen-8ac25",
+    "storage_bucket": "kaizen-8ac25.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:933394847272:android:9ef625180ebd12b202c71d",
+        "android_client_info": {
+          "package_name": "com.honeywell.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDvXQeVyQ62m18lTmSd-j0rjdVJO67ksOk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
