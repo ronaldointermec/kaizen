@@ -20,130 +20,215 @@ import 'package:kaizen/model/core.dart';
 //
 //   runApp(const MyApp());
 // }
-Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
-  runApp(MaterialApp(
-    debugShowCheckedModeBanner: false,
-    home: Home(),
-  ));
+
+
+
+void main() {
+  runApp(MyApp());
 }
 
-class Home extends StatefulWidget {
-  const Home({super.key});
-
+class MyApp extends StatelessWidget {
   @override
-  State<Home> createState() => _HomeState();
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: SuggestionForm(),
+    );
+  }
 }
 
-class _HomeState extends State<Home> {
-  File? _imagem;
-  double _uploadProgress = 0;
-  String? _downloadUrl;
+class SuggestionForm extends StatefulWidget {
+  @override
+  _SuggestionFormState createState() => _SuggestionFormState();
+}
 
-  Future _recuperarImagem(bool daCamera) async {
-    _downloadUrl = null;
-    final ImagePicker picker = ImagePicker();
-    XFile? imagemSelecionada;
-
-    if (daCamera) {
-      imagemSelecionada = await picker.pickImage(source: ImageSource.camera);
-    } else {
-      imagemSelecionada = await picker.pickImage(source: ImageSource.gallery);
-    }
-
-    setState(() {
-      _imagem = File(imagemSelecionada!.path);
-    });
-  }
-
-  Future<void> _uploadImagem() async {
-    if (_imagem == null) return;
-
-    FirebaseStorage storage = FirebaseStorage.instance;
-    Reference ref = storage
-        .ref()
-        .child('uploads/${DateTime.now().millisecondsSinceEpoch}.jpg');
-    UploadTask uploadTask = ref.putFile(_imagem!);
-
-    uploadTask.snapshotEvents.listen((TaskSnapshot snapshot) {
-
-      
-      setState(() {
-        _uploadProgress =
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-      });
-    }, onError: (e) {
-      // Handle errors
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Erro no upload: $e')),
-      );
-    });
-
-    try {
-      await uploadTask;
-      String downloadUrl = await ref.getDownloadURL();
-      setState(() {
-        _downloadUrl = downloadUrl;
-      });
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Upload completo! URL: $downloadUrl')),
-      );
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Erro ao recuperar a URL: $e')),
-      );
-    }
-
-    setState(() {
-      _uploadProgress = 0;
-      _imagem = null;
-    });
-  }
+class _SuggestionFormState extends State<SuggestionForm> {
+  final _formKey = GlobalKey<FormState>();
+  String? _selectedArea;
+  String? _selectedCategory;
+  String? _selectedSubcategory;
+  String? _selectedCandidate;
+  String? _eid;
+  String? _problemDescription;
+  String? _suggestion;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Selecione uma imagem'),
+        title: Row(
+          children: [
+            Image.asset(
+              'assets/images/logo.png', // Substitua pelo caminho correto da sua imagem
+              height: 40,
+            ),
+            SizedBox(width: 10),
+            Text('Sugestão'),
+          ],
+        ),
       ),
-      body: Center(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              TextButton(
-                  onPressed: () {
-
-                    _recuperarImagem(true);
-                  },
-                  child: Text('Camera')),
-              TextButton(
-                  onPressed: () {
-                    _recuperarImagem(false);
-                  },
-                  child: Text('Galeria')),
-              _imagem == null ? Container() : Image.file(_imagem!),
-            _imagem == null ? Container() :  TextButton(
-                  onPressed: () {
-                    _uploadImagem();
-
-                  },
-                  child: Text('Upload Storage')),
-              SizedBox(height: 20),
-              LinearProgressIndicator(
-                minHeight: 10,
-                color: Colors.red,
-                value: _uploadProgress / 100,
-              ),
-              SizedBox(height: 20),
-
-                _downloadUrl == null ? Container() :  Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Image.network(_downloadUrl!),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Center(
+                  child: Column(
+                    children: [
+                      Image.asset('assets/images/kaizen_logo.jpg',height: 100,width: 100,),
+                      SizedBox(height: 16),
+                      // Text(
+                      //   'PROGRAMA KAIZEN\nS&PS',
+                      //   textAlign: TextAlign.center,
+                      //   style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                      // ),
+                    ],
+                  ),
                 ),
-            ],
+                SizedBox(height: 32),
+                Text('Cadastre sua sugestão', style: TextStyle(fontSize: 18)),
+                SizedBox(height: 16),
+                TextFormField(
+                  decoration: InputDecoration(labelText: 'EID'),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Por favor, insira seu EID';
+                    }
+                    return null;
+                  },
+                  onChanged: (value) => _eid = value,
+                ),
+                SizedBox(height: 16),
+                DropdownButtonFormField<String>(
+                  value: _selectedArea,
+                  decoration: InputDecoration(labelText: 'Área da CI'),
+                  items: ['Área 1', 'Área 2', 'Área 3'].map((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
+                  onChanged: (newValue) => setState(() => _selectedArea = newValue),
+                  validator: (value) {
+                    if (value == null) {
+                      return 'Por favor, selecione uma área';
+                    }
+                    return null;
+                  },
+                ),
+                SizedBox(height: 16),
+                DropdownButtonFormField<String>(
+                  value: _selectedCategory,
+                  decoration: InputDecoration(labelText: 'Categoria'),
+                  items: ['Categoria 1', 'Categoria 2', 'Categoria 3'].map((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
+                  onChanged: (newValue) => setState(() => _selectedCategory = newValue),
+                  validator: (value) {
+                    if (value == null) {
+                      return 'Por favor, selecione uma categoria';
+                    }
+                    return null;
+                  },
+                ),
+                SizedBox(height: 16),
+                DropdownButtonFormField<String>(
+                  value: _selectedSubcategory,
+                  decoration: InputDecoration(labelText: 'Subcategoria'),
+                  items: ['Subcategoria 1', 'Subcategoria 2', 'Subcategoria 3'].map((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
+                  onChanged: (newValue) => setState(() => _selectedSubcategory = newValue),
+                  validator: (value) {
+                    if (value == null) {
+                      return 'Por favor, selecione uma subcategoria';
+                    }
+                    return null;
+                  },
+                ),
+                SizedBox(height: 16),
+                DropdownButtonFormField<String>(
+                  value: _selectedCandidate,
+                  decoration: InputDecoration(labelText: 'Candidata-se a resolver?'),
+                  items: ['Sim', 'Não'].map((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
+                  onChanged: (newValue) => setState(() => _selectedCandidate = newValue),
+                  validator: (value) {
+                    if (value == null) {
+                      return 'Por favor, selecione uma opção';
+                    }
+                    return null;
+                  },
+                ),
+                SizedBox(height: 16),
+                TextFormField(
+                  decoration: InputDecoration(labelText: 'Descrição do Problema'),
+                  maxLines: 3,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Por favor, descreva o problema';
+                    }
+                    return null;
+                  },
+                  onChanged: (value) => _problemDescription = value,
+                ),
+                SizedBox(height: 16),
+                TextFormField(
+                  decoration: InputDecoration(labelText: 'Ação ou Sugestão'),
+                  maxLines: 3,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Por favor, insira sua sugestão';
+                    }
+                    return null;
+                  },
+                  onChanged: (value) => _suggestion = value,
+                ),
+                SizedBox(height: 16),
+                ElevatedButton.icon(
+                  onPressed: () {
+                    // Implement file picker
+                  },
+                  icon: Icon(Icons.attach_file),
+                  label: Text('Anexar Arquivo'),
+                ),
+                SizedBox(height: 16),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          // Process data
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text('Enviando Sugestão...')),
+                          );
+                        }
+                      },
+                      child: Text('Enviar'),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        // Implement suggestion tracking
+                      },
+                      child: Text('Acompanhar Sugestão'),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
