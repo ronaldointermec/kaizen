@@ -21,8 +21,6 @@ import 'package:kaizen/model/core.dart';
 //   runApp(const MyApp());
 // }
 
-
-
 void main() {
   runApp(MyApp());
 }
@@ -54,21 +52,25 @@ class _SuggestionFormState extends State<SuggestionForm> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
+        backgroundColor: Colors.white,
         title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
+            Text('Sugestão',style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold,color: Colors.grey),),
+            // SizedBox(width: 100),
             Image.asset(
-              'assets/images/logo.png', // Substitua pelo caminho correto da sua imagem
+              'assets/images/logo.png',
+              // Substitua pelo caminho correto da sua imagem
               height: 40,
             ),
-            SizedBox(width: 10),
-            Text('Sugestão'),
           ],
         ),
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.only(right: 500.0, left: 500.0),
           child: Form(
             key: _formKey,
             child: Column(
@@ -77,7 +79,11 @@ class _SuggestionFormState extends State<SuggestionForm> {
                 Center(
                   child: Column(
                     children: [
-                      Image.asset('assets/images/kaizen_logo.jpg',height: 100,width: 100,),
+                      Image.asset(
+                        'assets/images/kaizen_logo.jpg',
+                        height: 400,
+                        width: 400,
+                      ),
                       SizedBox(height: 16),
                       // Text(
                       //   'PROGRAMA KAIZEN\nS&PS',
@@ -88,10 +94,26 @@ class _SuggestionFormState extends State<SuggestionForm> {
                   ),
                 ),
                 SizedBox(height: 32),
-                Text('Cadastre sua sugestão', style: TextStyle(fontSize: 18)),
+                Text('Cadastre sua sugestão', style: TextStyle(fontSize: 30)),
                 SizedBox(height: 16),
                 TextFormField(
-                  decoration: InputDecoration(labelText: 'EID'),
+                  decoration: const InputDecoration(
+                    hintText: 'Digite o EID',
+                    labelText: 'EID',
+                    contentPadding:
+                        EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.blue, width: 2.0),
+                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.green, width: 2.0),
+                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                    ),
+                  ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Por favor, insira seu EID';
@@ -102,15 +124,34 @@ class _SuggestionFormState extends State<SuggestionForm> {
                 ),
                 SizedBox(height: 16),
                 DropdownButtonFormField<String>(
+
                   value: _selectedArea,
-                  decoration: InputDecoration(labelText: 'Área da CI'),
+                  decoration: //InputDecoration(labelText: 'Área da CI'),
+                  const InputDecoration(
+                    // hintText: 'Selecione a Área',
+                    labelText: 'Área da CI',
+                    contentPadding:
+                    EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.blue, width: 2.0),
+                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.green, width: 2.0),
+                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                    ),
+                  ),
                   items: ['Área 1', 'Área 2', 'Área 3'].map((String value) {
                     return DropdownMenuItem<String>(
                       value: value,
                       child: Text(value),
                     );
                   }).toList(),
-                  onChanged: (newValue) => setState(() => _selectedArea = newValue),
+                  onChanged: (newValue) =>
+                      setState(() => _selectedArea = newValue),
                   validator: (value) {
                     if (value == null) {
                       return 'Por favor, selecione uma área';
@@ -122,13 +163,15 @@ class _SuggestionFormState extends State<SuggestionForm> {
                 DropdownButtonFormField<String>(
                   value: _selectedCategory,
                   decoration: InputDecoration(labelText: 'Categoria'),
-                  items: ['Categoria 1', 'Categoria 2', 'Categoria 3'].map((String value) {
+                  items: ['Categoria 1', 'Categoria 2', 'Categoria 3']
+                      .map((String value) {
                     return DropdownMenuItem<String>(
                       value: value,
                       child: Text(value),
                     );
                   }).toList(),
-                  onChanged: (newValue) => setState(() => _selectedCategory = newValue),
+                  onChanged: (newValue) =>
+                      setState(() => _selectedCategory = newValue),
                   validator: (value) {
                     if (value == null) {
                       return 'Por favor, selecione uma categoria';
@@ -140,13 +183,15 @@ class _SuggestionFormState extends State<SuggestionForm> {
                 DropdownButtonFormField<String>(
                   value: _selectedSubcategory,
                   decoration: InputDecoration(labelText: 'Subcategoria'),
-                  items: ['Subcategoria 1', 'Subcategoria 2', 'Subcategoria 3'].map((String value) {
+                  items: ['Subcategoria 1', 'Subcategoria 2', 'Subcategoria 3']
+                      .map((String value) {
                     return DropdownMenuItem<String>(
                       value: value,
                       child: Text(value),
                     );
                   }).toList(),
-                  onChanged: (newValue) => setState(() => _selectedSubcategory = newValue),
+                  onChanged: (newValue) =>
+                      setState(() => _selectedSubcategory = newValue),
                   validator: (value) {
                     if (value == null) {
                       return 'Por favor, selecione uma subcategoria';
@@ -157,14 +202,16 @@ class _SuggestionFormState extends State<SuggestionForm> {
                 SizedBox(height: 16),
                 DropdownButtonFormField<String>(
                   value: _selectedCandidate,
-                  decoration: InputDecoration(labelText: 'Candidata-se a resolver?'),
+                  decoration:
+                      InputDecoration(labelText: 'Candidata-se a resolver?'),
                   items: ['Sim', 'Não'].map((String value) {
                     return DropdownMenuItem<String>(
                       value: value,
                       child: Text(value),
                     );
                   }).toList(),
-                  onChanged: (newValue) => setState(() => _selectedCandidate = newValue),
+                  onChanged: (newValue) =>
+                      setState(() => _selectedCandidate = newValue),
                   validator: (value) {
                     if (value == null) {
                       return 'Por favor, selecione uma opção';
@@ -174,7 +221,8 @@ class _SuggestionFormState extends State<SuggestionForm> {
                 ),
                 SizedBox(height: 16),
                 TextFormField(
-                  decoration: InputDecoration(labelText: 'Descrição do Problema'),
+                  decoration:
+                      InputDecoration(labelText: 'Descrição do Problema'),
                   maxLines: 3,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
