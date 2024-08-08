@@ -6,20 +6,22 @@ class CustomTextFormField extends StatelessWidget {
   final FormFieldValidator<String>? validator;
   final ValueChanged<String>? onChanged;
   final int maxLines;
-  final double width;
+  final double? width;
 
   const CustomTextFormField({
     Key? key,
     required this.hintText,
     required this.labelText,
     this.validator,
-    this.onChanged, required this.maxLines, required this.width,
+    this.onChanged,
+    required this.maxLines,
+     this.width,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-        width: width,
+        width: width !=null ? width : null,
         child:  TextFormField(
 
       decoration: InputDecoration(
