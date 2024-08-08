@@ -7,6 +7,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:kaizen/firebase_options.dart';
 import 'package:kaizen/app.dart';
 import 'package:kaizen/model/core.dart';
+import 'package:kaizen/widgets/custom_dropdown_button_form_field.dart';
+import 'package:kaizen/widgets/custom_text_form_field.dart';
 
 // Future<void> main() async {
 //   WidgetsFlutterBinding.ensureInitialized();
@@ -29,6 +31,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: SuggestionForm(),
     );
   }
@@ -58,7 +61,13 @@ class _SuggestionFormState extends State<SuggestionForm> {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Text('Sugestão',style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold,color: Colors.grey),),
+            Text(
+              'Sugestão',
+              style: TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.grey),
+            ),
             // SizedBox(width: 100),
             Image.asset(
               'assets/images/logo.png',
@@ -81,77 +90,45 @@ class _SuggestionFormState extends State<SuggestionForm> {
                     children: [
                       Image.asset(
                         'assets/images/kaizen_logo.jpg',
-                        height: 400,
-                        width: 400,
+                        height: 300,
+                        width: 300,
                       ),
                       SizedBox(height: 16),
-                      // Text(
-                      //   'PROGRAMA KAIZEN\nS&PS',
-                      //   textAlign: TextAlign.center,
-                      //   style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                      // ),
                     ],
                   ),
                 ),
                 SizedBox(height: 32),
                 Text('Cadastre sua sugestão', style: TextStyle(fontSize: 30)),
                 SizedBox(height: 16),
-                TextFormField(
-                  decoration: const InputDecoration(
+
+                CustomTextFormField(
+                    width: 300,
                     hintText: 'Digite o EID',
                     labelText: 'EID',
-                    contentPadding:
-                        EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.blue, width: 2.0),
-                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.green, width: 2.0),
-                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                    ),
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Por favor, insira seu EID';
-                    }
-                    return null;
-                  },
-                  onChanged: (value) => _eid = value,
-                ),
-                SizedBox(height: 16),
-                DropdownButtonFormField<String>(
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Por favor, insira seu EID';
+                      }
+                      return null;
+                    },
+                    onChanged: (value) {
+                      _eid = value;
+                    },
+                    maxLines: 1),
 
+                SizedBox(height: 16),
+
+                CustomDropdownButtonFormField(
+                  width: 300,
                   value: _selectedArea,
-                  decoration: //InputDecoration(labelText: 'Área da CI'),
-                  const InputDecoration(
-                    // hintText: 'Selecione a Área',
-                    labelText: 'Área da CI',
-                    contentPadding:
-                    EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.blue, width: 2.0),
-                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.green, width: 2.0),
-                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                    ),
-                  ),
-                  items: ['Área 1', 'Área 2', 'Área 3'].map((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
-                  onChanged: (newValue) =>
-                      setState(() => _selectedArea = newValue),
+                  hintText: 'Selecione a Área',
+                  labelText: 'Área da CI',
+                  items: ['Área 1', 'Área 2', 'Área 3'],
+                  onChanged: (newValue) {
+                    setState(() {
+                      _selectedArea = newValue;
+                    });
+                  },
                   validator: (value) {
                     if (value == null) {
                       return 'Por favor, selecione uma área';
@@ -159,19 +136,20 @@ class _SuggestionFormState extends State<SuggestionForm> {
                     return null;
                   },
                 ),
+
                 SizedBox(height: 16),
-                DropdownButtonFormField<String>(
+
+                CustomDropdownButtonFormField(
+                  width: 300,
                   value: _selectedCategory,
-                  decoration: InputDecoration(labelText: 'Categoria'),
-                  items: ['Categoria 1', 'Categoria 2', 'Categoria 3']
-                      .map((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
-                  onChanged: (newValue) =>
-                      setState(() => _selectedCategory = newValue),
+                  hintText: 'Selecione a Área',
+                  labelText: 'Categoria',
+                  items: ['Categoria 1', 'Categoria 2', 'Categoria 3'],
+                  onChanged: (newValue) {
+                    setState(() {
+                      _selectedCategory = newValue;
+                    });
+                  },
                   validator: (value) {
                     if (value == null) {
                       return 'Por favor, selecione uma categoria';
@@ -179,19 +157,20 @@ class _SuggestionFormState extends State<SuggestionForm> {
                     return null;
                   },
                 ),
+
                 SizedBox(height: 16),
-                DropdownButtonFormField<String>(
+
+                CustomDropdownButtonFormField(
+                  width: 300,
                   value: _selectedSubcategory,
-                  decoration: InputDecoration(labelText: 'Subcategoria'),
-                  items: ['Subcategoria 1', 'Subcategoria 2', 'Subcategoria 3']
-                      .map((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
-                  onChanged: (newValue) =>
-                      setState(() => _selectedSubcategory = newValue),
+                  hintText: 'Selecione uma subcategoria',
+                  labelText: 'Subcategoria',
+                  items: ['Subcategoria 1', 'Subcategoria 2', 'Subcategoria 3'],
+                  onChanged: (newValue) {
+                    setState(() {
+                      _selectedSubcategory = newValue;
+                    });
+                  },
                   validator: (value) {
                     if (value == null) {
                       return 'Por favor, selecione uma subcategoria';
@@ -199,19 +178,22 @@ class _SuggestionFormState extends State<SuggestionForm> {
                     return null;
                   },
                 ),
+
                 SizedBox(height: 16),
-                DropdownButtonFormField<String>(
+
+                // ),
+
+                CustomDropdownButtonFormField(
+                  width: 300,
                   value: _selectedCandidate,
-                  decoration:
-                      InputDecoration(labelText: 'Candidata-se a resolver?'),
-                  items: ['Sim', 'Não'].map((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
-                  onChanged: (newValue) =>
-                      setState(() => _selectedCandidate = newValue),
+                  hintText: 'Selecione uma opção',
+                  labelText: 'Candidata-se a resolver?',
+                  items: ['Sim', 'Não'],
+                  onChanged: (newValue) {
+                    setState(() {
+                      _selectedCandidate = newValue;
+                    });
+                  },
                   validator: (value) {
                     if (value == null) {
                       return 'Por favor, selecione uma opção';
@@ -219,32 +201,43 @@ class _SuggestionFormState extends State<SuggestionForm> {
                     return null;
                   },
                 ),
+
                 SizedBox(height: 16),
-                TextFormField(
-                  decoration:
-                      InputDecoration(labelText: 'Descrição do Problema'),
-                  maxLines: 3,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Por favor, descreva o problema';
-                    }
-                    return null;
-                  },
-                  onChanged: (value) => _problemDescription = value,
-                ),
+
+                CustomTextFormField(
+                    width: 600,
+                    hintText: 'Digite  uma descrição do problema',
+                    labelText: 'Descrição do Problema',
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Por favor, descreva o problema';
+                      }
+                      return null;
+                    },
+                    onChanged: (value) {
+                      _problemDescription = value;
+                    },
+                    maxLines: 10),
+
                 SizedBox(height: 16),
-                TextFormField(
-                  decoration: InputDecoration(labelText: 'Ação ou Sugestão'),
-                  maxLines: 3,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Por favor, insira sua sugestão';
-                    }
-                    return null;
-                  },
-                  onChanged: (value) => _suggestion = value,
-                ),
+
+                CustomTextFormField(
+                    width: 600,
+                    hintText: 'Digite  uma ação ou sugestão',
+                    labelText: 'Ação ou Sugestão',
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Por favor, insira sua sugestão';
+                      }
+                      return null;
+                    },
+                    onChanged: (value) {
+                      _suggestion = value;
+                    },
+                    maxLines: 10),
+
                 SizedBox(height: 16),
+
                 ElevatedButton.icon(
                   onPressed: () {
                     // Implement file picker
@@ -274,6 +267,19 @@ class _SuggestionFormState extends State<SuggestionForm> {
                       child: Text('Acompanhar Sugestão'),
                     ),
                   ],
+                ),
+
+                SizedBox(height: 50),
+                const Divider(
+                  color: Colors.grey, // Cor da linha
+                  thickness: 1, // Espessura da linha
+                ),
+                SizedBox(height: 50),
+                const Center(
+                  child: Text('© Honeywell 2025'),
+                ),
+                const SizedBox(
+                  height: 50,
                 ),
               ],
             ),
