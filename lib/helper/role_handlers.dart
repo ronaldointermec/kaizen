@@ -29,7 +29,7 @@ class _WidgetWithRoleState extends State<WidgetWithRole> {
     if (isAllowed) {
       return widget.child;
     }
-    return Center(
+    return const Center(
       child: Text('I am not an admin'),
     );
   }

@@ -9,19 +9,19 @@ class CustomTextFormField extends StatelessWidget {
   final double? width;
 
   const CustomTextFormField({
-    Key? key,
+    super.key,
     required this.hintText,
     required this.labelText,
     this.validator,
     this.onChanged,
     required this.maxLines,
      this.width,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        width: width !=null ? width : null,
+    return SizedBox(
+        width: width,
         child:  TextFormField(
 
       decoration: InputDecoration(

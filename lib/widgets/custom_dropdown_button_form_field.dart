@@ -10,7 +10,7 @@ class CustomDropdownButtonFormField extends StatelessWidget {
   final double? width;
 
   const CustomDropdownButtonFormField({
-    Key? key,
+    super.key,
     this.value,
     required this.hintText,
     required this.labelText,
@@ -18,12 +18,12 @@ class CustomDropdownButtonFormField extends StatelessWidget {
     this.validator,
     this.onChanged,
      this.width,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        width: width != null ? width: null,
+    return SizedBox(
+        width: width,
         child: DropdownButtonFormField<String>(
           value: value,
           decoration: InputDecoration(

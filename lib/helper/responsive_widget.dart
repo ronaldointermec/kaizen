@@ -6,7 +6,7 @@ class ResponsiveWidget extends StatelessWidget {
   // final Widget tablet;
   final Widget desktop;
 
-  ResponsiveWidget({
+  const ResponsiveWidget({super.key, 
     required this.mobile,
     // required this.tablet,
     required this.desktop,
@@ -33,8 +33,8 @@ class ResponsiveWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(
-        '${MediaQuery.of(context).size.width} - ##################################################');
+    // print(
+    //     '${MediaQuery.of(context).size.width} - ##################################################');
     if (isDesktop(context)) {
       return desktop;
     } else if (isTablet(context)) {
@@ -42,8 +42,13 @@ class ResponsiveWidget extends StatelessWidget {
       return mobile;
     } else if (isMobile(context)) {
       return mobile;
-    }  else {
-      return Container();
+    } else {
+      return const Center(
+        child: Text(
+          'Não abusa :)',
+          style: TextStyle(fontSize: 40),
+        ),
+      );
     }
   }
 }

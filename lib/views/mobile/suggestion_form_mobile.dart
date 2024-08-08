@@ -3,6 +3,8 @@ import 'package:kaizen/widgets/custom_dropdown_button_form_field.dart';
 import 'package:kaizen/widgets/custom_text_form_field.dart';
 
 class SuggestionFormMobile extends StatefulWidget {
+  const SuggestionFormMobile({super.key});
+
   @override
   _SuggestionFormMobileState createState() => _SuggestionFormMobileState();
 }
@@ -60,7 +62,7 @@ class _SuggestionFormMobileState extends State<SuggestionFormMobile> {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Container(
+      child: SizedBox(
         width: 600,
         child: SingleChildScrollView(
           child: Padding(
