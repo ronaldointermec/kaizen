@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:kaizen/widgets/custom_dropdown_button_form_field.dart';
 import 'package:kaizen/widgets/custom_text_form_field.dart';
 
@@ -88,8 +89,8 @@ class _SuggestionFormDesktopState extends State<SuggestionFormDesktop> {
                     ),
 
                     // const SizedBox(height: 32),
-                    const Text('Cadastre sua sugestão',
-                        style: TextStyle(fontSize: 30)),
+                    Text('suggestion_register'.tr,
+                        style:const TextStyle(fontSize: 30,color: Colors.grey)),
                     const Divider(
                       thickness: 1,
                     ),
@@ -97,11 +98,11 @@ class _SuggestionFormDesktopState extends State<SuggestionFormDesktop> {
 
                     CustomTextFormField(
                         width: 300,
-                        hintText: 'Digite o EID',
+                        hintText: 'hint_eid'.tr,
                         labelText: 'EID',
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Por favor, insira seu EID';
+                            return 'validator_eid'.tr;
                           }
                           return null;
                         },
@@ -115,8 +116,8 @@ class _SuggestionFormDesktopState extends State<SuggestionFormDesktop> {
                     CustomDropdownButtonFormField(
                       width: 300,
                       value: _selectedArea,
-                      hintText: 'Selecione a Área',
-                      labelText: 'Área da CI',
+                      hintText: 'hint_area'.tr,
+                      labelText: 'label_area'.tr,
                       items: _areas,
                       onChanged: (newValue) {
                         setState(() {
@@ -125,7 +126,7 @@ class _SuggestionFormDesktopState extends State<SuggestionFormDesktop> {
                       },
                       validator: (value) {
                         if (value == null) {
-                          return 'Por favor, selecione uma área';
+                          return 'validator_area'.tr;
                         }
                         return null;
                       },
@@ -136,8 +137,8 @@ class _SuggestionFormDesktopState extends State<SuggestionFormDesktop> {
                     CustomDropdownButtonFormField(
                       width: 300,
                       value: _selectedCategory,
-                      hintText: 'Selecione a Área',
-                      labelText: 'Categoria',
+                      hintText: 'hint_category'.tr,
+                      labelText: 'label_category'.tr,
                       items: _categorias,
                       onChanged: (newValue) {
                         setState(() {
@@ -146,7 +147,7 @@ class _SuggestionFormDesktopState extends State<SuggestionFormDesktop> {
                       },
                       validator: (value) {
                         if (value == null) {
-                          return 'Por favor, selecione uma categoria';
+                          return 'validator_category'.tr;
                         }
                         return null;
                       },
@@ -157,8 +158,8 @@ class _SuggestionFormDesktopState extends State<SuggestionFormDesktop> {
                     CustomDropdownButtonFormField(
                       width: 300,
                       value: _selectedSubcategory,
-                      hintText: 'Selecione uma subcategoria',
-                      labelText: 'Subcategoria',
+                      hintText: 'hint_subcategory'.tr,
+                      labelText: 'label_subcategory'.tr,
                       items: _subcategorias,
                       onChanged: (newValue) {
                         setState(() {
@@ -167,7 +168,7 @@ class _SuggestionFormDesktopState extends State<SuggestionFormDesktop> {
                       },
                       validator: (value) {
                         if (value == null) {
-                          return 'Por favor, selecione uma subcategoria';
+                          return 'validator_subcategory'.tr;
                         }
                         return null;
                       },
@@ -180,9 +181,9 @@ class _SuggestionFormDesktopState extends State<SuggestionFormDesktop> {
                     CustomDropdownButtonFormField(
                       width: 300,
                       value: _selectedCandidate,
-                      hintText: 'Selecione uma opção',
-                      labelText: 'Candidata-se a resolver?',
-                      items: const ['Sim', 'Não'],
+                      hintText: 'hint_option'.tr,
+                      labelText: 'label_option'.tr,
+                      items: ['yes'.tr, 'no'.tr],
                       onChanged: (newValue) {
                         setState(() {
                           _selectedCandidate = newValue;
@@ -190,7 +191,7 @@ class _SuggestionFormDesktopState extends State<SuggestionFormDesktop> {
                       },
                       validator: (value) {
                         if (value == null) {
-                          return 'Por favor, selecione uma opção';
+                          return 'validator_option'.tr;
                         }
                         return null;
                       },
@@ -200,11 +201,11 @@ class _SuggestionFormDesktopState extends State<SuggestionFormDesktop> {
 
                     CustomTextFormField(
                         // width: 600,
-                        hintText: 'Digite  uma descrição do problema',
-                        labelText: 'Descrição do Problema',
+                        hintText: 'hint_description'.tr,
+                        labelText: 'label_description'.tr,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Por favor, descreva o problema';
+                            return 'validator_description'.tr;
                           }
                           return null;
                         },
@@ -217,11 +218,11 @@ class _SuggestionFormDesktopState extends State<SuggestionFormDesktop> {
 
                     CustomTextFormField(
                         // width: 600,
-                        hintText: 'Digite  uma ação ou sugestão',
-                        labelText: 'Ação ou Sugestão',
+                        hintText: 'hint_action'.tr,
+                        labelText: 'label_action'.tr,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Por favor, insira sua sugestão';
+                            return 'validator_action'.tr;
                           }
                           return null;
                         },
@@ -243,7 +244,7 @@ class _SuggestionFormDesktopState extends State<SuggestionFormDesktop> {
                                   // Implement file picker
                                 },
                                 icon: const Icon(Icons.attach_file),
-                                label: const Text('Anexar Arquivo'),
+                                label: Text('label_ttach_image'.tr),
                               ),
                               const SizedBox(height: 16),
                               ElevatedButton(
@@ -251,13 +252,13 @@ class _SuggestionFormDesktopState extends State<SuggestionFormDesktop> {
                                   if (_formKey.currentState!.validate()) {
                                     // Process data
                                     ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(
+                                      SnackBar(
                                           content:
-                                              Text('Enviando Sugestão...')),
+                                              Text('snack_send_suggestion'.tr)),
                                     );
                                   }
                                 },
-                                child: const Text('Enviar'),
+                                child: Text('button_send'.tr),
                               ),
                             ],
                           ),
@@ -272,7 +273,7 @@ class _SuggestionFormDesktopState extends State<SuggestionFormDesktop> {
                                 onPressed: () {
                                   // Implement suggestion tracking
                                 },
-                                child: const Text('Acompanhar Sugestão'),
+                                child: Text('button_suggestion'.tr),
                               ),
                             ],
                           ),

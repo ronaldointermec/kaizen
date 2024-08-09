@@ -6,7 +6,8 @@ class ResponsiveWidget extends StatelessWidget {
   // final Widget tablet;
   final Widget desktop;
 
-  const ResponsiveWidget({super.key, 
+  const ResponsiveWidget({
+    super.key,
     required this.mobile,
     // required this.tablet,
     required this.desktop,
@@ -14,15 +15,8 @@ class ResponsiveWidget extends StatelessWidget {
 
   // This is where the layout decision is made based on the screen width.
 
-  // static bool isShorter(BuildContext context) =>
-  //     MediaQuery.of(context).size.width < 400;
-
   static bool isMobile(BuildContext context) =>
       MediaQuery.of(context).size.width < 600;
-
-  // static bool isMobile(BuildContext context) =>
-  //     MediaQuery.of(context).size.width > 400 &&
-  //     MediaQuery.of(context).size.width < 600;
 
   static bool isTablet(BuildContext context) =>
       MediaQuery.of(context).size.width >= 600 &&
@@ -33,22 +27,13 @@ class ResponsiveWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // print(
-    //     '${MediaQuery.of(context).size.width} - ##################################################');
+print( MediaQuery.of(context).size.width);
     if (isDesktop(context)) {
       return desktop;
     } else if (isTablet(context)) {
-      // return tablet;
       return mobile;
-    } else /*if (isMobile(context)) {*/
+    } else {
       return mobile;
-    // } else {
-    //   return const Center(
-    //     child: Text(
-    //       'Não abusa :)',
-    //       style: TextStyle(fontSize: 40),
-    //     ),
-    //   );
-    // }
+    }
   }
 }
