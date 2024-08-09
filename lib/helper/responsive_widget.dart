@@ -14,15 +14,15 @@ class ResponsiveWidget extends StatelessWidget {
 
   // This is where the layout decision is made based on the screen width.
 
-  static bool isShorter(BuildContext context) =>
-      MediaQuery.of(context).size.width < 400;
-
-  // static bool isMobile(BuildContext context) =>
-  //     MediaQuery.of(context).size.width < 600;
+  // static bool isShorter(BuildContext context) =>
+  //     MediaQuery.of(context).size.width < 400;
 
   static bool isMobile(BuildContext context) =>
-      MediaQuery.of(context).size.width > 400 &&
       MediaQuery.of(context).size.width < 600;
+
+  // static bool isMobile(BuildContext context) =>
+  //     MediaQuery.of(context).size.width > 400 &&
+  //     MediaQuery.of(context).size.width < 600;
 
   static bool isTablet(BuildContext context) =>
       MediaQuery.of(context).size.width >= 600 &&
@@ -40,15 +40,15 @@ class ResponsiveWidget extends StatelessWidget {
     } else if (isTablet(context)) {
       // return tablet;
       return mobile;
-    } else if (isMobile(context)) {
+    } else /*if (isMobile(context)) {*/
       return mobile;
-    } else {
-      return const Center(
-        child: Text(
-          'Não abusa :)',
-          style: TextStyle(fontSize: 40),
-        ),
-      );
-    }
+    // } else {
+    //   return const Center(
+    //     child: Text(
+    //       'Não abusa :)',
+    //       style: TextStyle(fontSize: 40),
+    //     ),
+    //   );
+    // }
   }
 }

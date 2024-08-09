@@ -49,12 +49,12 @@ class MyApp extends StatelessWidget {
           //     ),
           //   ],
           // )
-          Scaffold(
+          const Scaffold(
         backgroundColor: Colors.white,
-        appBar: !ResponsiveWidget.isShorter(context)
-            ? const CustomAppBar()
-            : AppBar(),
-        body: const ResponsiveWidget(
+        appBar: /*!ResponsiveWidget.isShorter(context)
+            ? */CustomAppBar(),
+            //: AppBar(),
+        body: ResponsiveWidget(
           mobile: SuggestionFormMobile(),
           desktop: SuggestionFormDesktop(),
         ),
